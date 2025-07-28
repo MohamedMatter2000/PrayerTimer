@@ -44,7 +44,7 @@ async function getprayertimes(city) {
   showLoading();
   try {
     let Date = await fetch(
-      `http://api.aladhan.com/v1/timingsByCity?city=${city}&country=`
+      `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=`
     );
     if (Date.status === 400) {
       hideLoading();
