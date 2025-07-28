@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>PrayerTimer</title>
+  </head>
+  <body>
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-spinner">
+        <div class="prayer-icon">
+          <i class="fa-solid fa-mosque"></i>
+        </div>
+        <div class="spinner"></div>
+        <p>Loading prayer times...</p>
+        <p class="loading-text">Please wait</p>
+      </div>
+    </div>
+    <div class="container">
+      <div class="prayer-times">
+        <div class="location">
+          <input
+            type="text"
+            placeholder=" Enter City Name"
+            spellcheck="false"
+          />
+          <button><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="current-city">
+          <h2 id="currentCityName">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>Cairo</span>
+          </h2>
+        </div>
+        <div class="prayer-date">
+          <div class="date">
+            <h2 class="Datemalady">DD-MM-YYYY</h2>
+            <h2 class="DateHegira">DD-MM-YYYY</h2>
+          </div>
+          <div class="timing">
+            <div class="timeNow">
+              <h2></h2>
+            </div>
+            <div class="timeNow">
+              <h2></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="prayer">
+        <div class="prayday">
+          <h3>Fajr</h3>
+          <span>00:00</span>
+        </div>
+        <div class="prayday">
+          <h3>Sunrise</h3>
+          <span>00:00</span>
+        </div>
+        <div class="prayday">
+          <h3>Dhuhr</h3>
+          <span>00:00</span>
+        </div>
+        <div class="prayday">
+          <h3>Asr</h3>
+          <span>00:00</span>
+        </div>
+        <div class="prayday">
+          <h3>Maghrib</h3>
+          <span>00:00</span>
+        </div>
+        <div class="prayday">
+          <h3>Isha</h3>
+          <span>00:00</span>
+        </div>
+        <div class="prayday" id="next-paray">
+          <h3>Next prayer: <span></span></h3>
+          <span class="different">00:00:00</span>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="javascript/script.js"></script>
+    <script src="lib/moment/moment.min.js"></script>
+  </body>
+</html>
