@@ -2,6 +2,7 @@
 import moment from "https://cdn.jsdelivr.net/npm/moment@2.29.4/+esm";
 let btnsearch = document.querySelector("button");
 let inputCity = document.querySelector("input");
+let inputCountry = document.querySelector("#inputCountry");
 let DateMalady = document.querySelector(".Datemalady");
 let DateHegira = document.querySelector(".DateHegira");
 let timeNow = document.querySelectorAll(".timeNow h2");
@@ -40,22 +41,30 @@ function makeClock() {
 }
 setInterval(makeClock, 1000);
 makeClock();
-async function getprayertimes(city) {
+
+async function getprayertimes(city, country) {
+  if (!country || country.trim() === "") {
+    alert("Please enter country name - Country is required");
+    return;
+  }
   showLoading();
   try {
-    let Date = await fetch(
-      `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=`
-    );
+    let apiUrl = `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}`;
+    let Date = await fetch(apiUrl);
     if (Date.status === 400) {
       hideLoading();
-      alert("Enter Correct City");
+      alert("Please enter correct city and country names");
       return;
     }
     let getDate = await Date.json();
     let finalDate = getDate.data;
     if (currentCityName) {
-      currentCityName.textContent =
+      let displayName =
         city.charAt(0).toUpperCase() + city.slice(1).toLowerCase();
+      displayName += `, ${
+        country.charAt(0).toUpperCase() + country.slice(1).toLowerCase()
+      }`;
+      currentCityName.textContent = displayName;
     }
     DateMalady.innerHTML = ` ${finalDate.date.gregorian.day}  ${finalDate.date.gregorian.month.en} , ${finalDate.date.gregorian.year}`;
     DateHegira.innerHTML = `${finalDate.date.hijri.weekday.ar} ${finalDate.date.hijri.day} , ${finalDate.date.hijri.month.ar} ${finalDate.date.hijri.year}`;
@@ -178,29 +187,40 @@ async function getprayertimes(city) {
 document.addEventListener("DOMContentLoaded", function () {
   hideLoading();
   setTimeout(() => {
-    getprayertimes("Cairo");
+    getprayertimes("Cairo", "Egypt");
   }, 100);
 });
-// window.addEventListener("load", function () {
-//   if (DateMalady.innerHTML.trim() === "DD-MM-YYYY") {
-//     getprayertimes("Cairo");
-//   }
-// });
-btnsearch.addEventListener("click", () => {
-  if (inputCity.value.trim() !== "") {
-    getprayertimes(inputCity.value);
-    inputCity.value = "";
-  } else {
-    alert("Please enter a city name");
+function performSearch() {
+  const cityValue = inputCity.value.trim();
+  const countryValue = inputCountry ? inputCountry.value.trim() : "";
+  if (cityValue === "") {
+    alert("Please enter city name");
+    return;
   }
-});
+  if (countryValue === "") {
+    alert("Please enter country name - Country is required");
+    return;
+  }
+  getprayertimes(cityValue, countryValue);
+  inputCity.value = "";
+  if (inputCountry) {
+    inputCountry.value = "";
+  }
+}
+btnsearch.addEventListener("click", performSearch);
 document.addEventListener("keypress", function (event) {
   if (event.key === "Enter") {
-    if (inputCity.value.trim() !== "") {
-      getprayertimes(inputCity.value);
-      inputCity.value = "";
-    } else {
-      alert("Please enter a city name");
-    }
+    performSearch();
   }
 });
+if (inputCountry) {
+  inputCountry.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      performSearch();
+    }
+  });
+} else {
+  console.warn(
+    "Make sure country input field exists in HTML with id='inputCountry'"
+  );
+}
