@@ -1,7 +1,7 @@
 // import moment from "../node_modules/moment/dist/moment.js";
 import moment from "https://cdn.jsdelivr.net/npm/moment@2.29.4/+esm";
 let btnsearch = document.querySelector("button");
-let inputCity = document.querySelector("input");
+let inputCity = document.querySelector("#inputCity");
 let inputCountry = document.querySelector("#inputCountry");
 let DateMalady = document.querySelector(".Datemalady");
 let DateHegira = document.querySelector(".DateHegira");
@@ -213,14 +213,3 @@ document.addEventListener("keypress", function (event) {
     performSearch();
   }
 });
-if (inputCountry) {
-  inputCountry.addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-      performSearch();
-    }
-  });
-} else {
-  console.warn(
-    "Make sure country input field exists in HTML with id='inputCountry'"
-  );
-}
