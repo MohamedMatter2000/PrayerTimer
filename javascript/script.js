@@ -1,4 +1,5 @@
-import moment from "../node_modules/moment/dist/moment.js";
+// import moment from "../node_modules/moment/dist/moment.js";
+import moment from "https://cdn.jsdelivr.net/npm/moment@2.29.4/+esm";
 let btnsearch = document.querySelector("button");
 let inputCity = document.querySelector("input");
 let DateMalady = document.querySelector(".Datemalady");
